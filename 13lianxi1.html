@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script>
+        window.onload=function(){
+            var btn1=document.getElementById("btn1");
+            btn1.onclick=function(){
+                var xhr=new XMLHttpRequest;
+                xhr.open("get","newsList.php",true);
+                xhr.send();
+                xhr.onreadystatechange=function(){
+                    if(xhr.readyState==4)
+                    {
+                        if(xhr.status==200)
+                        {
+                            var mydata=JSON.parse(xhr.responseText);
+                            var html="";
+                            for(var i=0;i<mydata.length;i++){
+                                html+="<li><a href='#'>"+mydata[i].title+"<span>"+mydata[i].date+"</span></li>"
+                            }
+                            var oUl=document.getElementById("ul1");
+                            oUl.innerHTML=html;
+                        }else{
+                            alert("出错了:"+xhr.status)
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <input type="button" value="点击显示" id="btn1">
+    <ul id="ul1"></ul>
+</body>
+</html>
